@@ -1,0 +1,24 @@
+.tick{
+    width:30px;
+    height: 30px;
+    border: 1px solid lightgrey;
+    display: inline-block;
+    cursor: pointer;
+    transition: 0.5s;
+}
+.tick.active{
+    background-color: red !important;
+}
+
+.tick.play{
+    background-color: blue;
+}
+.tick:nth-child(4n+2){
+    border: 1px solid black;
+}
+
+.name{
+    display: inline-block;
+    width: 100px;
+    text-align: right;
+}
