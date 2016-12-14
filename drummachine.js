@@ -8,7 +8,10 @@ function init() {
     ticker = false; //set the interval variable
     stopped = true; //if the machine is stopped
     document.querySelector('#timer').innerHTML = 120 +' BPM';
+    addEventListeners();
+};
 
+function addEventListeners(){
     ticks = document.querySelectorAll('div.tick');
     ticks.forEach(item => item.onclick = function () {
         this.classList.toggle('play')
@@ -18,8 +21,7 @@ function init() {
     labels.forEach(item => item.onclick = function(){
         this.classList.toggle('mute');
     })
-
-};
+}
 
 function getParents(el, parentSelector /* optional */) {
 
@@ -38,6 +40,14 @@ function getParents(el, parentSelector /* optional */) {
     parents.push(parentSelector);
 
     return parents;
+}
+
+function appendHtml(el, str) {
+    var div = document.createElement('div');
+    div.innerHTML = str;
+    while (div.children.length > 0) {
+        el.appendChild(div.children[0]);
+    }
 }
 
 function itemTicked(item) {
@@ -95,5 +105,23 @@ function tickintervalchange() {
     if (!stopped) {
         start();
     }
+}
+
+function save(){
+    pause();
+    var patternHtml = document.querySelector('.pattern').innerHTML;
+    patternHtml = patternHtml.replace(/ active/g,'');
+    localStorage.setItem('pattern',patternHtml);
+    if (!stopped){
+        start();
+    }
+
+}
+
+function load(){
+    var patternHtml = localStorage.getItem('pattern');
+    document.querySelector('.pattern').innerHTML = "";
+    appendHtml(document.querySelector('.pattern'),patternHtml);
+    addEventListeners();
 }
 

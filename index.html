@@ -9,7 +9,7 @@
 </head>
 <body>
     <div class="container">
-        <div class="row">
+        <div class="row pattern">
             <div class="col-xs-12 text-center instrument" data-name="kick">
                 <div class="name">Kick</div>
                 <div class="tick" data-tick="1"></div>
@@ -189,7 +189,9 @@
                 <button class="btn btn-success" onclick="start()">Start</button>
                 <button class="btn btn-danger" onclick="stop(true)">Stop</button>
                 <input min="30" max="280" type="range" value="120" id="tickinterval" onchange="tickintervalchange()">
-                <span id="timer"></span>
+                <div id="timer"></div>
+                <button class="btn btn-info" onclick="save()">Save</button>
+                <button class="btn btn-warning" onclick="load()">Load</button>
             </div>
 
         </div>
