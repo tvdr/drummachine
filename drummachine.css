@@ -21,4 +21,9 @@
     display: inline-block;
     width: 100px;
     text-align: right;
+    cursor:pointer;
+}
+
+.name.mute{
+    color:lightgrey;
 }

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script type="text/javascript" src="machine.js"></script>
+    <script type="text/javascript" src="drummachine.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="drummachine.css">
 </head>
@@ -183,13 +183,13 @@
                 <div class="tick" data-tick="16"></div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-xs-12 text-center" id="timer"></div>
-        </div>
+
         <div class="row">
             <div class="col-xs-12">
                 <button class="btn btn-success" onclick="start()">Start</button>
-                <button class="btn btn-danger" onclick="stop()">Stop</button>
+                <button class="btn btn-danger" onclick="stop(true)">Stop</button>
+                <input min="30" max="280" type="range" value="120" id="tickinterval" onchange="tickintervalchange()">
+                <span id="timer"></span>
             </div>
 
         </div>
