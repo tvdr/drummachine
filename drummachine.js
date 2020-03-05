@@ -7,18 +7,57 @@ function init() {
     tickinterval = 60000 / 120 / 4; //120bpm
     ticker = false; //set the interval variable
     stopped = true; //if the machine is stopped
-    document.querySelector('#timer').innerHTML = 120 +' BPM';
+    tickCount = 32;
+    document.querySelector('#timer').innerHTML = 120 + ' BPM';
+    instruments = [
+        'kick',
+        'hihat',
+        'snare',
+        'boom',
+        'clap',
+        'openhat',
+        'ride',
+        'tink',
+        'tom',
+    ]
+    createInstuments();
     addEventListeners();
 };
 
-function addEventListeners(){
+function createInstuments() {
+    instruments.map(function (instrumentName) {
+
+        var instrumentsContainer = document.getElementById('instrumentsContainer');
+
+        var instrumentContainer = document.createElement('div');
+        instrumentContainer.classList = 'col-xs-12 text-center instrument';
+        instrumentContainer.setAttribute('data-name', instrumentName);
+        instrumentsContainer.appendChild(instrumentContainer);
+
+        var instrumentNameElement = document.createElement('div');
+        instrumentNameElement.classList = 'name';
+        instrumentNameElement.innerHTML = instrumentName;
+        instrumentContainer.appendChild(instrumentNameElement);
+
+        for (var i = 1; i <= tickCount; i++) {
+            var tickElem = document.createElement('div');
+            tickElem.classList = 'tick';
+            tickElem.setAttribute('data-tick', i);
+            instrumentContainer.appendChild(tickElem);
+        }
+
+
+    })
+}
+
+function addEventListeners() {
     ticks = document.querySelectorAll('div.tick');
     ticks.forEach(item => item.onclick = function () {
         this.classList.toggle('play')
     });
 
     labels = document.querySelectorAll('div.name');
-    labels.forEach(item => item.onclick = function(){
+    labels.forEach(item => item.onclick = function () {
         this.classList.toggle('mute');
     })
 }
@@ -68,7 +107,7 @@ function itemTicked(item) {
 function start() {
     stopped = false;
     ticker = setInterval(function () {
-        if (tick > 16) {
+        if (tick > tickCount) {
             tick = 1;
         }
         var setToActive = document.querySelectorAll(`div[data-tick="${tick.toString()}"]`);
@@ -92,7 +131,7 @@ function stop(reset) {
 
 }
 
-function pause(){
+function pause() {
     stop(false);
 }
 
@@ -100,28 +139,34 @@ function tickintervalchange() {
     console.log('change');
     var val = document.querySelector('#tickinterval').value;
     tickinterval = 60000 / val / 4;
-    document.querySelector('#timer').innerHTML = val +' BPM';
+    document.querySelector('#timer').innerHTML = val + ' BPM';
     pause();
     if (!stopped) {
         start();
     }
 }
 
-function save(){
+function save() {
     pause();
     var patternHtml = document.querySelector('.pattern').innerHTML;
-    patternHtml = patternHtml.replace(/ active/g,'');
-    localStorage.setItem('pattern',patternHtml);
-    if (!stopped){
+    patternHtml = patternHtml.replace(/ active/g, '');
+    localStorage.setItem('pattern', patternHtml);
+    if (!stopped) {
         start();
     }
 
 }
 
-function load(){
+function reset() {
+    var setToInactive = document.querySelectorAll('div.tick.play');
+    setToInactive.forEach(item => item.classList.remove('play'));
+    stop(true);
+}
+
+function load() {
     var patternHtml = localStorage.getItem('pattern');
     document.querySelector('.pattern').innerHTML = "";
-    appendHtml(document.querySelector('.pattern'),patternHtml);
+    appendHtml(document.querySelector('.pattern'), patternHtml);
     addEventListeners();
 }
 
