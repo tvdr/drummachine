@@ -19,9 +19,16 @@ function init() {
         'ride',
         'tink',
         'tom',
-    ]
+    ];
+    synthNotes = ["C","D","E","F","G","A","B"];
+    synthScaleNum = 2;
     createInstuments();
+    createSynth();
+
     addEventListeners();
+
+    synth = new Tone.MembraneSynth().toMaster();
+
 };
 
 function createInstuments() {
@@ -42,6 +49,46 @@ function createInstuments() {
         for (var i = 1; i <= tickCount; i++) {
             var tickElem = document.createElement('div');
             tickElem.classList = 'tick';
+            tickElem.setAttribute('data-tick', i);
+            instrumentContainer.appendChild(tickElem);
+        }
+
+
+    })
+}
+
+function createSynth(){
+
+
+    var instrumentsContainer = document.getElementById('instrumentsContainer');
+
+
+    var dividerElem = document.createElement('div');
+    dividerElem.classList='col-xs-12';
+
+    var hrElem = document.createElement('hr');
+    dividerElem.appendChild(hrElem);
+    instrumentsContainer.appendChild(dividerElem);
+
+    instrumentsContainer.appendChild(document.createElement('div.col-xs-12'));
+
+    synthNotes.map(function (instrumentName) {
+
+        var instrumentsContainer = document.getElementById('instrumentsContainer');
+
+        var instrumentContainer = document.createElement('div');
+        instrumentContainer.classList = 'col-xs-12 text-center instrument';
+        instrumentContainer.setAttribute('data-name', instrumentName+synthScaleNum);
+        instrumentsContainer.appendChild(instrumentContainer);
+
+        var instrumentNameElement = document.createElement('div');
+        instrumentNameElement.classList = 'name';
+        instrumentNameElement.innerHTML = instrumentName + synthScaleNum;
+        instrumentContainer.appendChild(instrumentNameElement);
+
+        for (var i = 1; i <= tickCount; i++) {
+            var tickElem = document.createElement('div');
+            tickElem.classList = 'tick synth';
             tickElem.setAttribute('data-tick', i);
             instrumentContainer.appendChild(tickElem);
         }
@@ -92,15 +139,31 @@ function appendHtml(el, str) {
 function itemTicked(item) {
     item.classList.add('active');
     if (item.classList.value.indexOf('play') > -1) {
-        var parent = getParents(item)[0];
-        var nameElem = parent.children[0];
 
-        var sound_name = parent.dataset.name;
-        var sound = document.querySelector(`audio[data-name="${sound_name}"]`);
-        if (sound && nameElem.classList.value.indexOf('mute') == -1) {
-            sound.currentTime = 0;
-            sound.play();
+        console.log(item.classList);
+        if (item.classList.value.indexOf('synth') > -1){
+            var parent = getParents(item)[0];
+            var nameElem = parent.children[0];
+
+            var sound_name = parent.dataset.name;
+
+
+
+            synth.triggerAttackRelease(sound_name);
+        }else{
+            var parent = getParents(item)[0];
+            var nameElem = parent.children[0];
+
+            var sound_name = parent.dataset.name;
+            var sound = document.querySelector(`audio[data-name="${sound_name}"]`);
+            if (sound && nameElem.classList.value.indexOf('mute') == -1) {
+                sound.currentTime = 0;
+                sound.play();
+            }
         }
+
+
+
     }
 };
 
