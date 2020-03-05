@@ -7,7 +7,7 @@ function init() {
     tickinterval = 60000 / 120 / 4; //120bpm
     ticker = false; //set the interval variable
     stopped = true; //if the machine is stopped
-    tickCount = 32;
+    tickCount = 16;
     document.querySelector('#timer').innerHTML = 120 + ' BPM';
     instruments = [
         'kick',
@@ -27,7 +27,17 @@ function init() {
 
     addEventListeners();
 
-    synth = new Tone.MembraneSynth().toMaster();
+    synth = new Tone.Synth({
+        oscillator: {
+            type: 'sawtooth'
+        },
+        envelope: {
+            attack: 2,
+            decay: 1,
+            sustain: 0.4,
+            release: 4
+        }
+    }).toMaster();
 
 };
 
@@ -146,19 +156,20 @@ function itemTicked(item) {
             var nameElem = parent.children[0];
 
             var sound_name = parent.dataset.name;
-
-
-
-            synth.triggerAttackRelease(sound_name);
+            synth.triggerAttackRelease(sound_name,"8n");
         }else{
             var parent = getParents(item)[0];
             var nameElem = parent.children[0];
 
             var sound_name = parent.dataset.name;
-            var sound = document.querySelector(`audio[data-name="${sound_name}"]`);
-            if (sound && nameElem.classList.value.indexOf('mute') == -1) {
-                sound.currentTime = 0;
-                sound.play();
+
+            var player = new Tone.Player("sounds/"+sound_name+".wav").toMaster();
+
+            //var sound = document.querySelector(`audio[data-name="${sound_name}"]`);
+            if (player && nameElem.classList.value.indexOf('mute') == -1) {
+                //sound.currentTime = 0;
+                //sound.play();
+                player.autostart = true;
             }
         }
 
