@@ -104,7 +104,32 @@ function createSynth(){
         }
 
 
-    })
+    });
+
+
+    /*knobs*/
+
+    $('#synth_attack').knob({
+        'change' : function (v) {
+            synth.envelope.attack = v;
+        }
+    });
+
+    $('#synth_decay').knob({
+        'change' : function (v) {
+            synth.envelope.sustain = v/100;
+        }
+    });
+
+    $('#synth_release').knob({
+        'change' : function (v) {
+            synth.envelope.release = v;
+        }
+    });
+
+
+
+
 }
 
 function addEventListeners() {

@@ -6,35 +6,53 @@
     <script type="text/javascript" src="drummachine.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="drummachine.css">
+    <script
+            src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+            integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="
+            crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.5.40/Tone.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery-Knob/1.2.13/jquery.knob.min.js"></script>
 </head>
 <body>
-    <div class="container">
-        <div class="row pattern" id="instrumentsContainer">
-        </div>
-        <div class="row">
-            <div class="col-xs-12">
-                <button class="btn btn-success" onclick="start()">Start</button>
-                <button class="btn btn-danger" onclick="stop(true)">Stop</button>
-                <input min="30" max="280" type="range" value="120" id="tickinterval" onchange="tickintervalchange()">
-                <div id="timer"></div>
-                <button class="btn btn-info" onclick="save()">Save</button>
-                <button class="btn btn-warning" onclick="load()">Load</button>
-                <button class="btn btn-danger" onclick="reset()">Reset</button>
-            </div>
-
+<div class="container">
+    <div class="row pattern" id="instrumentsContainer"></div>
+    <div class="row">
+        <h3>Synth params</h3>
+        <div class="col-xs-12">
+            <input type="text" value="5" min="1" max="10" class="synth_envelope_param" data-param_name="attack" id="synth_attack">
+            <input type="text" value="5" min="1" max="100" class="synth_envelope_param" data-param_name="decay" id="synth_decay">
+            <input type="text" value="5" min="1" max="100" class="synth_envelope_param" data-param_name="release" id="synth_release">
         </div>
     </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <hr>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <button class="btn btn-success" onclick="start()">Start</button>
+            <button class="btn btn-danger" onclick="stop(true)">Stop</button>
+            <input min="30" max="280" type="range" value="120" id="tickinterval" onchange="tickintervalchange()">
+            <div id="timer"></div>
+            <button class="btn btn-info" onclick="save()">Save</button>
+            <button class="btn btn-warning" onclick="load()">Load</button>
+            <button class="btn btn-danger" onclick="reset()">Reset</button>
+        </div>
+
+    </div>
+
+</div>
 
 
-    <audio data-name="boom" src="sounds/boom.wav"></audio>
-    <audio data-name="clap" src="sounds/clap.wav"></audio>
-    <audio data-name="openhat" src="sounds/openhat.wav"></audio>
-    <audio data-name="ride" src="sounds/ride.wav"></audio>
-    <audio data-name="tink" src="sounds/tink.wav"></audio>
-    <audio data-name="tom" src="sounds/tom.wav"></audio>
-    <audio data-name="kick" src="sounds/kick.wav"></audio>
-    <audio data-name="hihat" src="sounds/hihat.wav"></audio>
-    <audio data-name="snare" src="sounds/snare.wav"></audio>
+<audio data-name="boom" src="sounds/boom.wav"></audio>
+<audio data-name="clap" src="sounds/clap.wav"></audio>
+<audio data-name="openhat" src="sounds/openhat.wav"></audio>
+<audio data-name="ride" src="sounds/ride.wav"></audio>
+<audio data-name="tink" src="sounds/tink.wav"></audio>
+<audio data-name="tom" src="sounds/tom.wav"></audio>
+<audio data-name="kick" src="sounds/kick.wav"></audio>
+<audio data-name="hihat" src="sounds/hihat.wav"></audio>
+<audio data-name="snare" src="sounds/snare.wav"></audio>
 </body>
 </html>
